@@ -2,6 +2,7 @@ package cover;
 
 import java.util.ArrayList;
 
+// sum of basic Sets
 public class SetSum {
 
     private int id;
@@ -9,7 +10,7 @@ public class SetSum {
 
     public SetSum(int id) {
         this.id = id;
-        sets = new ArrayList<>();
+        this.sets = new ArrayList<>();
     }
 
     public void addSet(Set set) {
@@ -24,12 +25,21 @@ public class SetSum {
         return false;
     }
 
+    public boolean hasNew(Request req) {
+        for (int i = 0; i < req.getData().size(); i++) {
+            if (req.getData().get(i) == 0 && contains(i + 1))
+                return true;
+        }
+
+        return false;
+    }
+
     public int numberOfNew(Request req) {
         int output = 0;
 
         for (int i = 0; i < req.getData().size(); i++) {
             if (req.getData().get(i) == 0) {
-                if (contains(i + 1)) {
+                if (contains(i + 1)) {      // numbers in Request are indexed from 0
                     output++;
                 }
             }
@@ -49,6 +59,7 @@ public class SetSum {
     public int getId() {
         return id;
     }
+
     public void incrId() {
         id++;
     }

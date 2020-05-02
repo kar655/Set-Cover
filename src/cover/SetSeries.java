@@ -6,8 +6,8 @@ public class SetSeries extends Set {
 
     public SetSeries(ArrayList<Integer> args) {
         this.type = 1;
-        this.data = args;
         // a b
+        this.data = args;
     }
 
     @Override

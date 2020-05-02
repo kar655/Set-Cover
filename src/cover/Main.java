@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello");
+//        System.out.println("Hello");
         // 0 - zbior
         // 1 - przedzial
         // 2 - szereg
@@ -19,12 +19,12 @@ public class Main {
 //        Request request;
 
         while (true) {
-            parser.parseInput(in.nextInt());
-//            try {
-//                parser.parseInput(in.nextInt());
-//            } catch (Exception e) {
-//                break;
-//            }
+//            parser.parseInput(in.nextInt());
+            try {
+                parser.parseInput(in.nextInt());
+            } catch (Exception e) {
+                break;
+            }
 
 //            if (parser.whatAction() == 1)
 //                universe.addSetSum(parser.giveSet());

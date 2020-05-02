@@ -19,7 +19,7 @@ public class Request {
     }
 
     public boolean finished() {
-        for(int num : data)
+        for (int num : data)
             if (num == 0)
                 return false;
 

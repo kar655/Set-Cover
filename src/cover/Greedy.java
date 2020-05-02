@@ -10,21 +10,25 @@ public class Greedy extends Strategy {
     private Greedy() {
     }
 
+    public static Greedy give() {
+        return strategy;
+    }
+
     private int efficient(ArrayList<SetSum> setSums, Request request) {
         int num = 0;
         int id = -1;
+        int numOfNew;
+
         for (int i = 0; i < setSums.size(); i++) {
-            if (setSums.get(i).numberOfNew(request) > num) {
-                num = setSums.get(i).numberOfNew(request);
+            numOfNew = setSums.get(i).numberOfNew(request);
+
+            if (numOfNew > num) {
+                num = numOfNew;
                 id = i;
             }
         }
 
         return id;
-    }
-
-    public static Greedy give() {
-        return strategy;
     }
 
     @Override
@@ -34,8 +38,9 @@ public class Greedy extends Strategy {
 
         while (!request.finished()) {
             id = efficient(setCollection.getSetSums(), request);
-            if (id == -1)
+            if (id == -1)   // can't get more elements
                 break;
+
             setCollection.getSetSums().get(id).solve(request);
             output.add(setCollection.getSetSums().get(id).getId());
         }
@@ -44,13 +49,13 @@ public class Greedy extends Strategy {
             Collections.sort(output);
             for (int i = 0; i < output.size(); i++) {
                 System.out.print(output.get(i));
-                if (i != output.size() - 1)
+
+                if (i != output.size() - 1)     // no last space
                     System.out.print(" ");
             }
             System.out.println();
         } else {
             System.out.println("0");
         }
-
     }
 }

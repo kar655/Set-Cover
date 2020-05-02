@@ -15,6 +15,7 @@ public abstract class Set {
     // returns amount of owned numbers less or equal to num
 //    public abstract int numberOfNew(Request req);
 
+    // checks if this set contains num
     public abstract boolean contains(int num);
 
     public int getType() {

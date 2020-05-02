@@ -85,8 +85,10 @@ public class Parser {
 //                System.out.println("To nie bedzie zwykly SetSingle " + current);
             } else {
 //                System.out.println("Zbudowalem SetSingle jesli nie pusty " + current + " dopudowuje do niego dalej");
-                data.addSet(new SetSingle(current));
-                current = new ArrayList<>();
+                if (current.size() != 0) {
+                    data.addSet(new SetSingle(current));
+                    current = new ArrayList<>();
+                }
                 current.add(num);
             }
         } else if (readingType == 1) {

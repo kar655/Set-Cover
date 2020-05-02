@@ -60,7 +60,12 @@ public class Exact extends Strategy {
             //visited.get(i).set(request.getSize(), i);   // id of requests
             //requests.add(new Request(request.getSize(), request.getStrategy()));
 
+
+
             temporary = request.copy();
+            if (!setCollection.getSetSums().get(i).hasNew(temporary))
+                continue;
+
             setCollection.getSetSums().get(i).solve(temporary);
 
             if (temporary.finished()) {
@@ -72,10 +77,10 @@ public class Exact extends Strategy {
             q.add(added);
         }
 
-
         ArrayList<Boolean> helper;
         Request helper2;
         int first;
+
         while (!q.isEmpty()) {
 
             temporary = requestQueue.peek();
@@ -84,11 +89,14 @@ public class Exact extends Strategy {
             for (int i = first + 1; i < leng; i++) {
 
                 assert q.peek() != null;
-                added = new ArrayList<>(q.peek());
+                // tu bylo wczesniej added = q.peek();
+                if (!q.peek().get(i) && setCollection.getSetSums().get(i).hasNew(temporary)) {     // if i-th set wasn't added
+                    added = new ArrayList<>(q.peek());
 
-                if (!added.get(i)) {
                     assert temporary != null;
                     helper2 = temporary.copy();
+
+
                     setCollection.getSetSums().get(i).solve(helper2);
                     added.set(i, true);
 
