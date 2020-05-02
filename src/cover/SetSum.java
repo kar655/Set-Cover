@@ -13,8 +13,28 @@ public class SetSum {
         this.sets = new ArrayList<>();
     }
 
+    // todo
     public void addSet(Set set) {
-        sets.add(set);
+//        if (set.getType() == 2 && set.data.get(0) + set.data.get(1) > set.data.get(2)) {
+//            ArrayList<Integer> arr = new ArrayList<>();
+//            arr.add(set.data.get(0));
+//            this.addSet(new SetSingle(arr));
+//            return;
+//        }
+
+        if (set.getType() == 0 && sets.size() != 0) {
+            if (sets.get(0).getType() == 0) {
+                sets.get(0).data.add(set.data.get(0));
+//                sets.get(0).merge(set);
+
+            } else {
+                Set temp = sets.get(0);
+                sets.set(0, set);
+                sets.add(temp);
+            }
+        } else {
+            sets.add(set);
+        }
     }
 
     public boolean contains(int num) {

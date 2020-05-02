@@ -20,8 +20,8 @@ public class Exact extends Strategy {
 
     }
 
-    private int findFirst(ArrayList<Boolean> arr) {
-        for (int i = 0; i < arr.size(); i++) {
+    private int findLast(ArrayList<Boolean> arr) {
+        for (int i = arr.size() - 1; i >= 0; i--) {
             if (arr.get(i))
                 return i;
         }
@@ -79,14 +79,14 @@ public class Exact extends Strategy {
 
         ArrayList<Boolean> helper;
         Request helper2;
-        int first;
+        int last;
 
         while (!q.isEmpty()) {
 
             temporary = requestQueue.peek();
-            first = findFirst(q.peek());
+            last = findLast(q.peek());
 
-            for (int i = first + 1; i < leng; i++) {
+            for (int i = last + 1; i < leng; i++) {
 
                 assert q.peek() != null;
                 // tu bylo wczesniej added = q.peek();
