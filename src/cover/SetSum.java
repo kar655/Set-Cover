@@ -22,10 +22,10 @@ public class SetSum {
 //            return;
 //        }
 
+//        sets.add(set);
         if (set.getType() == 0 && sets.size() != 0) {
             if (sets.get(0).getType() == 0) {
                 sets.get(0).data.add(set.data.get(0));
-//                sets.get(0).merge(set);
 
             } else {
                 Set temp = sets.get(0);
@@ -47,6 +47,7 @@ public class SetSum {
 
     public boolean hasNew(Request req) {
         for (int i = 0; i < req.getData().size(); i++) {
+            // numbers in Request are indexed from 0
             if (req.getData().get(i) == 0 && contains(i + 1))
                 return true;
         }
@@ -58,11 +59,9 @@ public class SetSum {
         int output = 0;
 
         for (int i = 0; i < req.getData().size(); i++) {
-            if (req.getData().get(i) == 0) {
-                if (contains(i + 1)) {      // numbers in Request are indexed from 0
-                    output++;
-                }
-            }
+            // numbers in Request are indexed from 0
+            if (req.getData().get(i) == 0 && contains(i + 1))
+                output++;
         }
 
         return output;

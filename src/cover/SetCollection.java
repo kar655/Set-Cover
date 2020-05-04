@@ -8,12 +8,12 @@ public class SetCollection {
 
     private ArrayList<SetSum> setSums;
 
-    public static SetCollection give() {
-        return universe;
-    }
-
     private SetCollection() {
         setSums = new ArrayList<>();
+    }
+
+    public static SetCollection give() {
+        return universe;
     }
 
     public void addSetSum(SetSum setSum) {
@@ -22,13 +22,5 @@ public class SetCollection {
 
     public ArrayList<SetSum> getSetSums() {
         return setSums;
-    }
-
-    public boolean contains(int num) {
-        for (SetSum setSum : setSums)
-            if (setSum.contains(num))
-                return true;
-
-        return false;
     }
 }

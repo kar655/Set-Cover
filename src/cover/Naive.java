@@ -18,13 +18,13 @@ public class Naive extends Strategy {
         for (SetSum setSum : setCollection.getSetSums()) {
             if (setSum.numberOfNew(request) != 0) {
                 output.append(setSum.getId()).append(" ");
-                // tu jakies dodanie tych elementow do request
                 setSum.solve(request);
             }
         }
 
         if (request.finished()) {
-            output = new StringBuilder(output.substring(0, output.length() - 1)); // remove last space
+            // remove last space
+            output = new StringBuilder(output.substring(0, output.length() - 1));
             System.out.println(output);
         } else {
             System.out.println("0");

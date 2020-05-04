@@ -16,9 +16,6 @@ public class Exact extends Strategy {
         return strategy;
     }
 
-    private void bfs() {
-
-    }
 
     private int findLast(ArrayList<Boolean> arr) {
         for (int i = arr.size() - 1; i >= 0; i--) {
@@ -39,6 +36,7 @@ public class Exact extends Strategy {
         output = new StringBuilder(output.substring(0, output.length() - 1)); // remove last space
         System.out.println(output);
     }
+
 
     @Override
     public void solve(SetCollection setCollection, Request request) {
@@ -77,7 +75,6 @@ public class Exact extends Strategy {
             q.add(added);
         }
 
-        ArrayList<Boolean> helper;
         Request helper2;
         int last;
 
@@ -88,12 +85,10 @@ public class Exact extends Strategy {
 
             for (int i = last + 1; i < leng; i++) {
 
-                assert q.peek() != null;
-                // tu bylo wczesniej added = q.peek();
-                if (!q.peek().get(i) && setCollection.getSetSums().get(i).hasNew(temporary)) {     // if i-th set wasn't added
+                // if i-th set wasn't added or set doesn't add anything
+                if (!q.peek().get(i) && setCollection.getSetSums().get(i).hasNew(temporary)) {
                     added = new ArrayList<>(q.peek());
 
-                    assert temporary != null;
                     helper2 = temporary.copy();
 
 

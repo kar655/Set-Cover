@@ -9,7 +9,6 @@ public class SetSingle extends Set {
         this.data = args;
     }
 
-
     @Override
     public boolean contains(int num) {
         for (int n : data)
@@ -18,18 +17,4 @@ public class SetSingle extends Set {
 
         return false;
     }
-
-    public void merge(Set set) {
-        data.add(set.data.get(0));
-    }
-
-//    public int newNumbers(Request req) {
-//        int result = 0;
-//
-//        for (int num : data)
-//            if (num <= req.size && req.data[num - 1] == 0)
-//                result++;
-//
-//        return result;
-//    }
 }
