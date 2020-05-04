@@ -13,17 +13,10 @@ public class SetSum {
         this.sets = new ArrayList<>();
     }
 
-    // todo
     public void addSet(Set set) {
-//        if (set.getType() == 2 && set.data.get(0) + set.data.get(1) > set.data.get(2)) {
-//            ArrayList<Integer> arr = new ArrayList<>();
-//            arr.add(set.data.get(0));
-//            this.addSet(new SetSingle(arr));
-//            return;
-//        }
 
 //        sets.add(set);
-        if (set.getType() == 0 && sets.size() != 0) {
+        if (set.getType() == 0 && sets.size() != 0) { // merges set single
             if (sets.get(0).getType() == 0) {
                 sets.get(0).data.add(set.data.get(0));
 

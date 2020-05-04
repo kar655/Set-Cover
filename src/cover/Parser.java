@@ -5,11 +5,9 @@ import java.util.ArrayList;
 public class Parser {
 
     private int currentId; // id of current SetSum
-    // todo clean 1 - setSeries, 2 - setRange,
     // -1 - nothing, 0 - Set, 1 - SetSeries or SetRange, 3 - request
     private int readingType;
     private SetSum data; // current SetSum
-//    private Request result;
     private ArrayList<Integer> current; // list of current numbers to request or set
     private SetCollection universe = SetCollection.give();
     private ArrayList<Strategy> strategies = new ArrayList<>(); // list of strategies

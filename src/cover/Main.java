@@ -8,25 +8,13 @@ public class Main {
 
         Scanner in = new Scanner(System.in);
         Parser parser = new Parser();
-//        SetCollection universe = SetCollection.give();
-//        ArrayList<Strategy> strategies = new ArrayList<>();
-//        strategies.add(Naive.give());
-//        Request request;
 
         while (true) {
-//            parser.parseInput(in.nextInt());
             try {
                 parser.parseInput(in.nextInt());
             } catch (Exception e) {
                 break;
             }
-
-//            if (parser.whatAction() == 1)
-//                universe.addSetSum(parser.giveSet());
-//            else if (parser.whatAction() == 2) {
-//                request = parser.giveRequest();
-//                strategies.get(request.getStrategy()).solve(universe, request);
-//            }
         }
     }
 }
