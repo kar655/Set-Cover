@@ -14,20 +14,7 @@ public class SetSum {
     }
 
     public void addSet(Set set) {
-
-//        sets.add(set);
-        if (set.getType() == 0 && sets.size() != 0) { // merges set single
-            if (sets.get(0).getType() == 0) {
-                sets.get(0).data.add(set.data.get(0));
-
-            } else {
-                Set temp = sets.get(0);
-                sets.set(0, set);
-                sets.add(temp);
-            }
-        } else {
-            sets.add(set);
-        }
+        sets.add(set);
     }
 
     public boolean contains(int num) {

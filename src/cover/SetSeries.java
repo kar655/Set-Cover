@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 public class SetSeries extends Set {
 
-    public SetSeries(ArrayList<Integer> args) {
-        this.type = 1;
-        // a b
-        this.data = args;
+    public SetSeries(ArrayList<Integer> data) {
+        super(data);
     }
 
     @Override

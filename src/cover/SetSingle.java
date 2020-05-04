@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 public class SetSingle extends Set {
 
-    public SetSingle(ArrayList<Integer> args) {
-        this.type = 0;
-        this.data = args;
+    public SetSingle(ArrayList<Integer> data) {
+        super(data);
     }
 
     @Override
