@@ -17,20 +17,20 @@ public class Exact extends Strategy {
     }
 
     // return position of last 1 is arr
-    private int findLast(ArrayList<Boolean> arr) {
+    private int findLast(ArrayList<Integer> arr) {
         for (int i = arr.size() - 1; i >= 0; i--) {
-            if (arr.get(i))
+            if (arr.get(i) == 1)
                 return i;
         }
         return -1;
     }
 
     // prints output from arr and setCollection's ids
-    private void printOutput(ArrayList<Boolean> arr, SetCollection setCollection) {
+    private void printOutput(ArrayList<Integer> arr, SetCollection setCollection) {
         StringBuilder output = new StringBuilder();
 
         for (int i = 0; i < arr.size(); i++)
-            if (arr.get(i))
+            if (arr.get(i) == 1)
                 output.append(setCollection.getSetSums().get(i).getId()).append(" ");
 
         output.setLength(output.length() - 1); // remove last space
@@ -41,21 +41,21 @@ public class Exact extends Strategy {
     // true if finished else false
     private boolean initialize(SetCollection setCollection,
                                Request request, int length,
-                               Queue<ArrayList<Boolean>> q,
+                               Queue<ArrayList<Integer>> q,
                                Queue<Request> requestQueue) {
 
-        ArrayList<Boolean> added;
+        ArrayList<Integer> added;
         Request temporary;
 
 
         for (int i = 0; i < length; i++) {
 
-            added = new ArrayList<>(Collections.nCopies(length, false));
-            added.set(i, true);
+            added = new ArrayList<>(Collections.nCopies(length, 0));
+            added.set(i, 1);
 
             temporary = request.copy();
             if (!setCollection.getSetSums().get(i).hasNew(temporary))
-                continue;   // i-th SetSum dose not have any necessary elements
+                continue;   // i-th SetSum doesn't have any necessary elements
 
             setCollection.getSetSums().get(i).solve(temporary);
 
@@ -74,10 +74,10 @@ public class Exact extends Strategy {
     // loop over all states of adding SetSums
     // print result and return true if can be done else false
     private boolean bfs(SetCollection setCollection, int length,
-                        Queue<ArrayList<Boolean>> q,
+                        Queue<ArrayList<Integer>> q,
                         Queue<Request> requestQueue) {
 
-        ArrayList<Boolean> added;
+        ArrayList<Integer> added;
         Request fromQueue;
         Request temp;
         int last;
@@ -89,13 +89,20 @@ public class Exact extends Strategy {
 
             for (int i = last + 1; i < length; i++) {
 
-                // if i-th set wasn't added or set doesn't add anything
-                if (!q.peek().get(i) && setCollection.getSetSums().get(i).hasNew(fromQueue)) {
+                if (q.peek().get(i) == -1) // known useless
+                    continue;
+
+                if (!setCollection.getSetSums().get(i).hasNew(fromQueue)) { // useless
+                    q.peek().set(i, -1);
+                    continue;
+                }
+
+                if (q.peek().get(i) == 0) {
                     added = new ArrayList<>(q.peek());
                     temp = fromQueue.copy();
 
                     setCollection.getSetSums().get(i).solve(temp);
-                    added.set(i, true);
+                    added.set(i, 1);
 
                     if (temp.finished()) {
                         printOutput(added, setCollection);
@@ -118,7 +125,8 @@ public class Exact extends Strategy {
     public void solve(SetCollection setCollection, Request request) {
 
         int length = setCollection.getSetSums().size();
-        Queue<ArrayList<Boolean>> q = new LinkedList<>();
+        // -1 - doesn't add anything, 0 - not added, 1 - added
+        Queue<ArrayList<Integer>> q = new LinkedList<>();
         Queue<Request> requestQueue = new LinkedList<>();
 
 

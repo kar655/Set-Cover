@@ -46,7 +46,7 @@ public class SetSum {
     }
 
     public boolean hasNew(Request req) {
-        for (int i = 0; i < req.getData().size(); i++) {
+        for (int i = 0; i < req.getSize(); i++) {
             // numbers in Request are indexed from 0
             if (req.getData().get(i) == 0 && contains(i + 1))
                 return true;
