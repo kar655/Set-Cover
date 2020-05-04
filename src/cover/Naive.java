@@ -16,18 +16,20 @@ public class Naive extends Strategy {
         StringBuilder output = new StringBuilder();
 
         for (SetSum setSum : setCollection.getSetSums()) {
-            if (setSum.numberOfNew(request) != 0) {
-                output.append(setSum.getId()).append(" ");
+            if (setSum.hasNew(request)) {
+
                 setSum.solve(request);
+                output.append(setSum.getId());
+
+                if (request.finished()) {
+                    System.out.println(output);
+                    return;
+                }
+
+                output.append(" ");
             }
         }
 
-        if (request.finished()) {
-            // remove last space
-            output = new StringBuilder(output.substring(0, output.length() - 1));
-            System.out.println(output);
-        } else {
-            System.out.println("0");
-        }
+        System.out.println("0");
     }
 }

@@ -14,6 +14,8 @@ public class Greedy extends Strategy {
         return strategy;
     }
 
+    // return index of SetSum with highest number of new elements
+    // or if no new element can be added returns -1
     private int efficient(ArrayList<SetSum> setSums, Request request) {
         int num = 0;
         int id = -1;
@@ -31,6 +33,19 @@ public class Greedy extends Strategy {
         return id;
     }
 
+    // prints output from ArrayList of added SetSums' ids
+    private void printOutput(ArrayList<Integer> output) {
+        Collections.sort(output);   // keep lexicographic order
+
+        for (int i = 0; i < output.size(); i++) {
+            System.out.print(output.get(i));
+
+            if (i != output.size() - 1)     // no last space
+                System.out.print(" ");
+        }
+        System.out.println();
+    }
+
     @Override
     public void solve(SetCollection setCollection, Request request) {
         ArrayList<Integer> output = new ArrayList<>();
@@ -45,17 +60,9 @@ public class Greedy extends Strategy {
             output.add(setCollection.getSetSums().get(id).getId());
         }
 
-        if (request.finished()) {
-            Collections.sort(output);
-            for (int i = 0; i < output.size(); i++) {
-                System.out.print(output.get(i));
-
-                if (i != output.size() - 1)     // no last space
-                    System.out.print(" ");
-            }
-            System.out.println();
-        } else {
+        if (request.finished())
+            printOutput(output);
+        else
             System.out.println("0");
-        }
     }
 }

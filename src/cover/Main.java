@@ -1,15 +1,10 @@
 package cover;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-//        System.out.println("Hello");
-        // 0 - zbior
-        // 1 - przedzial
-        // 2 - szereg
 
         Scanner in = new Scanner(System.in);
         Parser parser = new Parser();

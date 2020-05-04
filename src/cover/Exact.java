@@ -16,7 +16,7 @@ public class Exact extends Strategy {
         return strategy;
     }
 
-
+    // return position of last 1 is arr
     private int findLast(ArrayList<Boolean> arr) {
         for (int i = arr.size() - 1; i >= 0; i--) {
             if (arr.get(i))
@@ -25,90 +25,107 @@ public class Exact extends Strategy {
         return -1;
     }
 
+    // prints output from arr and setCollection's ids
     private void printOutput(ArrayList<Boolean> arr, SetCollection setCollection) {
         StringBuilder output = new StringBuilder();
-        for (int i = 0; i < arr.size(); i++) {
-            if (arr.get(i)) {
-                output.append(setCollection.getSetSums().get(i).getId()).append(" ");
-            }
-        }
 
-        output = new StringBuilder(output.substring(0, output.length() - 1)); // remove last space
+        for (int i = 0; i < arr.size(); i++)
+            if (arr.get(i))
+                output.append(setCollection.getSetSums().get(i).getId()).append(" ");
+
+        output.setLength(output.length() - 1); // remove last space
         System.out.println(output);
     }
 
+    // adds to both queues one of SetSum in lexicographic order
+    // true if finished else false
+    private boolean initialize(SetCollection setCollection,
+                               Request request, int length,
+                               Queue<ArrayList<Boolean>> q,
+                               Queue<Request> requestQueue) {
 
-    @Override
-    public void solve(SetCollection setCollection, Request request) {
-//        ArrayList<ArrayList<Integer>> visited = new ArrayList<>();
-        int leng = setCollection.getSetSums().size();
         ArrayList<Boolean> added;
         Request temporary;
-        Queue<ArrayList<Boolean>> q = new LinkedList<>();
-        Queue<Request> requestQueue = new LinkedList<>();
 
 
-        for (int i = 0; i < leng; i++) {
-//            visited.add(new ArrayList<>(Collections.nCopies(request.getSize(), 0)));
-//            visited.get(i).set(i, 1);
-            added = new ArrayList<>(Collections.nCopies(leng, false));
+        for (int i = 0; i < length; i++) {
+
+            added = new ArrayList<>(Collections.nCopies(length, false));
             added.set(i, true);
-
-
-            //visited.get(i).set(request.getSize(), i);   // id of requests
-            //requests.add(new Request(request.getSize(), request.getStrategy()));
-
-
 
             temporary = request.copy();
             if (!setCollection.getSetSums().get(i).hasNew(temporary))
-                continue;
+                continue;   // i-th SetSum dose not have any necessary elements
 
             setCollection.getSetSums().get(i).solve(temporary);
 
-            if (temporary.finished()) {
+            if (temporary.finished()) {     // finished by one SetSum
                 System.out.println(setCollection.getSetSums().get(i).getId());
-                return;
+                return true;
             }
 
             requestQueue.add(temporary);
             q.add(added);
         }
 
-        Request helper2;
+        return false;
+    }
+
+    // loop over all states of adding SetSums
+    // print result and return true if can be done else false
+    private boolean bfs(SetCollection setCollection, int length,
+                        Queue<ArrayList<Boolean>> q,
+                        Queue<Request> requestQueue) {
+
+        ArrayList<Boolean> added;
+        Request fromQueue;
+        Request temp;
         int last;
 
         while (!q.isEmpty()) {
 
-            temporary = requestQueue.peek();
+            fromQueue = requestQueue.peek();
             last = findLast(q.peek());
 
-            for (int i = last + 1; i < leng; i++) {
+            for (int i = last + 1; i < length; i++) {
 
                 // if i-th set wasn't added or set doesn't add anything
-                if (!q.peek().get(i) && setCollection.getSetSums().get(i).hasNew(temporary)) {
+                if (!q.peek().get(i) && setCollection.getSetSums().get(i).hasNew(fromQueue)) {
                     added = new ArrayList<>(q.peek());
+                    temp = fromQueue.copy();
 
-                    helper2 = temporary.copy();
-
-
-                    setCollection.getSetSums().get(i).solve(helper2);
+                    setCollection.getSetSums().get(i).solve(temp);
                     added.set(i, true);
 
-                    if (helper2.finished()) {
+                    if (temp.finished()) {
                         printOutput(added, setCollection);
-                        return;
+                        return true;
                     }
 
                     q.add(added);
-                    requestQueue.add(helper2);
+                    requestQueue.add(temp);
                 }
             }
 
             q.remove();
             requestQueue.remove();
-
         }
-        System.out.println("0");
+
+        return false;
+    }
+
+    @Override
+    public void solve(SetCollection setCollection, Request request) {
+
+        int length = setCollection.getSetSums().size();
+        Queue<ArrayList<Boolean>> q = new LinkedList<>();
+        Queue<Request> requestQueue = new LinkedList<>();
+
+
+        if (initialize(setCollection, request, length, q, requestQueue))
+            return; // already finished by one SetSum
+
+        if (!bfs(setCollection, length, q, requestQueue))
+            System.out.println("0"); // can't be done
     }
 }
